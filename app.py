@@ -118,7 +118,44 @@ def main():
     elif command == "list":
         # optional filter by status
         filter_status = sys.argv[2].lower() if len(sys.argv) > 2 else None
+        if filter_status and filter_status not in ['pending', 'completed']:
+            print(f"Error: Invalid status '{filter_status}'. Use 'pending' or 'completed'.")
+            sys.exit(1)
+        tracker.list_tasks(filter_status)
+
+    elif command == "complete":
+        if len(sys.argv) < 3:
+            print("Error: Please provide a task ID.")
+            print("Usage: python task_tracker.py complete <id>")
+            sys.exit(1)
         
+        try:
+            task_id = int(sys.argv[2])
+            tracker.complete_task(task_id)
+        except ValueError:
+            print("Error: Task ID must be a number.")
+            sys.exit(1)
+
+    elif command == "delete":
+        if len(sys.argv) < 3:
+            print("Error: Please provide a task ID.")
+            print("Usage: python task_tracker.py delete <id>")
+            sys.exit(1)
+        try: 
+            task_id = int(sys.argv[2])
+            tracker.delete_task(task_id)
+        except ValueError:
+            print("Error: task ID must be a number.")
+            sys.exit(1)
+
+    elif command == "help":
+        print_help()
+    
+    else:
+        print(f"Error: unknown command '{command}'.")
+        print_help()
+        sys.exit(1)
+
     
 
 if __name__ == "__main__":
