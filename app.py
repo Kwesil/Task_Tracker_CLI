@@ -17,3 +17,12 @@ def __init__(self, data_file="tasks.json"):
     self.tasks = self.load_tasks()
 
 
+# Loading tasks
+def load_tasks(self):
+    if os.path.exists(self.data_file):
+        try:
+            with open(self.data_file, 'r') as f:
+                return json.load(f)
+        except json.JSONDecodeError:
+            return []
+    return []
