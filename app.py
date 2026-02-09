@@ -57,3 +57,10 @@ def complete_task(self, task_id):
             task['status'] = 'completed'
             task['completed_at'] = datetime.now().isoformat()
             self.save_tasks()
+
+# Deleting tasks
+def delete_task(self, task_id):
+    for i, task in enumerate(self.tasks):
+        if task['id'] == task_id:
+            deleted_task = self.tasks.pop(i)
+            self.save_tasks()
