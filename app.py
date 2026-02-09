@@ -26,3 +26,10 @@ def load_tasks(self):
         except json.JSONDecodeError:
             return []
     return []
+
+# Saving tasks
+def save_tasks(self):
+    with open(self.data_file, 'w') as f:
+        json.dump(self.tasks, f, indent=2) # indent=2 is used for readable formatting
+
+        
