@@ -44,3 +44,10 @@ def add_task(self, description):
     self.tasks.append(task)
     self.save_tasks()
 
+# Listing tasks
+def list_tasks(self, filter_status=None):
+    tasks_to_show = self.tasks
+    if filter_status:
+        tasks_to_show = [t for t in self.tasks if t['status'] == filter_status]
+        
+
