@@ -10,6 +10,7 @@ import json
 import os
 import sys
 from datetime import datetime
+from pathlib import Path
 
 class TaskTracker:
     # Initialization
@@ -44,12 +45,33 @@ class TaskTracker:
         }
         self.tasks.append(task)
         self.save_tasks()
+        print(f"✓ Task added: #{task['id']} - {description}")
 
     # Listing tasks
     def list_tasks(self, filter_status=None):
+        if not self.tasks:
+            print("No tasks found. Add one with: task add <description>")
+            return
+        # Filter tasks if status is specified
         tasks_to_show = self.tasks
         if filter_status:
             tasks_to_show = [t for t in self.tasks if t['status'] == filter_status]
+        if not tasks_to_show:
+            print(f"No {filter_status} tasks found.")
+            return
+        
+        # Display header
+        print("\n" + "=" * 70)
+        print(f"{'ID':<5} {'Status':<12} {'Description':<40} {'Created':<15}")
+        print("=" * 70)
+
+        # Display tasks
+        for task in tasks_to_show:
+            status_symbol = "✓" if task['status'] == 'completed' else 'o'
+            created = datetime.fromisoformat(task['created_at']).strftime('%Y-%m-%d')
+            
+            print(f"{task['id']:<5} {status_symbol} {task['status']:<10} {task['description']:<40} {created:<15}")
+        print("=" * 70 + "\n")
 
     # Completing tasks
     def complete_task(self, task_id):
@@ -66,10 +88,38 @@ class TaskTracker:
                 deleted_task = self.tasks.pop(i)
                 self.save_tasks()
 
+def print_help():
+    return []
+
 # Command-line interface
 def main():
+    """Main entry point for the CLI"""
     tracker = TaskTracker()
+
+    # Check if any command was provided
+    if len(sys.argv) < 2:
+        print("Error: No command provided.")
+        print_help()
+        sys.exit(1)
+
     command = sys.argv[1].lower()
+
+    # Handle different commands
+    if command == "add":
+        if len(sys.argv) < 3:
+            print("Erroor: Please provide a task description.")
+            print("Usage: python task_tracker.py add <description>")
+            sys.exit(1)
+
+        # Join all arguments after "add" as the description
+        description = " ".join(sys.argv[2:])
+        tracker.add_task(description)
+
+    elif command == "list":
+        # optional filter by status
+        filter_status = sys.argv[2].lower() if len(sys.argv) > 2 else None
+        
+    
 
 if __name__ == "__main__":
     main()
