@@ -49,5 +49,11 @@ def list_tasks(self, filter_status=None):
     tasks_to_show = self.tasks
     if filter_status:
         tasks_to_show = [t for t in self.tasks if t['status'] == filter_status]
-        
 
+# Completing tasks
+def complete_task(self, task_id):
+    for task in self.tasks:
+        if task['id'] == task_id:
+            task['status'] = 'completed'
+            task['completed_at'] = datetime.now().isoformat()
+            self.save_tasks()
