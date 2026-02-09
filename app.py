@@ -32,4 +32,15 @@ def save_tasks(self):
     with open(self.data_file, 'w') as f:
         json.dump(self.tasks, f, indent=2) # indent=2 is used for readable formatting
 
-        
+# Adding tasks
+def add_task(self, description):
+    task = {
+        'id': len(self.tasks) + 1,
+        'description': description,
+        'status': 'pending',
+        'created at': datetime.nowo().isoformat(),
+        'completed at': None
+    }
+    self.tasks.append(task)
+    self.save_tasks()
+
