@@ -89,7 +89,28 @@ class TaskTracker:
                 self.save_tasks()
 
 def print_help():
-    return []
+    """Print usage instructions"""
+    help_text = """
+Task Tracker CLI - Simple task management from the command line
+
+USAGE:
+    python task_tracker.py <command> [arguments]
+
+COMMANDS:
+        add <description>       Add a new task
+        list [status]           List all tasks (optional: pending/completed)
+        complete <id>           Mark a task as completed
+        delete <id>             Delete a task
+        help                    Sshow this help message
+
+EXAMPLES:
+        python task_tracker.py add "Buy groceries"
+        python task_tracker.py list
+        python task_tracker.py list pending
+        python task_tracker.py complete 1
+        python task_tracker.py delete 2
+"""
+    print(help_text)
 
 # Command-line interface
 def main():
@@ -118,7 +139,7 @@ def main():
     elif command == "list":
         # optional filter by status
         filter_status = sys.argv[2].lower() if len(sys.argv) > 2 else None
-        if filter_status and filter_status not in ['pending', 'completed']:
+        if filter_status and filter_status not in ['pen  ding', 'completed']:
             print(f"Error: Invalid status '{filter_status}'. Use 'pending' or 'completed'.")
             sys.exit(1)
         tracker.list_tasks(filter_status)
