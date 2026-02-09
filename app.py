@@ -10,3 +10,10 @@ import json
 import os
 import sys
 from datetime import datetime
+
+# Initialization
+def __init__(self, data_file="tasks.json"):
+    self.data_file = data_file
+    self.tasks = self.load_tasks()
+
+
