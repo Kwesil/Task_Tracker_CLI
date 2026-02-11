@@ -40,8 +40,8 @@ class TaskTracker:
             'id': len(self.tasks) + 1,
             'description': description,
             'status': 'pending',
-            'created at': datetime.nowo().isoformat(),
-            'completed at': None
+            'created_at': datetime.now().isoformat(),
+            'completed_at': None
         }
         self.tasks.append(task)
         self.save_tasks()
